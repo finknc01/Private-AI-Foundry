@@ -1,247 +1,71 @@
 # Private-AI-Foundry
 
-> **Project Obsidian — build a private AI environment for sensitive workloads, then try to break your own trust assumptions before someone else does.**
+> **Project Obsidian — build a private AI environment for sensitive workloads, then challenge its trust assumptions before anyone else does.**
 
 ## Project status
 
 | Field | Current state |
 |---|---|
-| **Status** | **Planned — security/private-AI campaign scheduled for Weeks 43–44** |
+| **Status** | **Planned — core security campaign scheduled for Weeks 43–44** |
 | **Current stage** | Campaign authored; no hardening result, threat-model finding, or security claim is presented as complete |
 | **Lab environment** | Synthetic users, data, credentials, and fictional infrastructure only |
 | **Evidence rule** | Defensive controls must map to explicit threats and residual risk; PPML is not represented as a substitute for host/network security |
 | **Last plan sync** | 2026-08-19 |
-| **License** | No open-source license is granted unless an explicit license is added later |
 
-## Skills you will build
+## Purpose
 
-- Threat modeling for AI infrastructure
-- Linux host hardening and least privilege
-- Network segmentation and management-plane separation
-- Secrets handling and credential hygiene
-- Container isolation and runtime security concepts
-- Access control, auditing, and logging
-- Patch/configuration discipline
-- Secure workload and data-flow reasoning
-- Privacy-preserving ML context and where it does—and does not—help
-- Defense-in-depth design for on-prem/private AI
+Private-AI-Foundry is the secure/private-AI infrastructure lab. Fictional **Aster Labs** needs an accelerated environment for sensitive workloads without giving every researcher unrestricted access to hosts, secrets, management interfaces, datasets, or each other's work.
 
-## General idea
-
-Private-AI-Foundry is the **secure/private AI infrastructure lab**.
-
-A fictional research organization called **Aster Labs** has a model-development project that cannot use public AI services because its training data is sensitive. They want a small private environment where researchers can run accelerated workloads without giving every user unrestricted access to the host, secrets, management interfaces, data, or one another's work.
-
-You are asked to design and build **Project Obsidian**: a defensible private AI environment.
-
-The lab is not about making a laptop “military grade.” It is about learning to ask the security questions an infrastructure engineer should ask at every layer:
+The core question is:
 
 > **What am I protecting, from whom, through which path, and what control actually reduces that risk?**
 
-This is a defensive lab. It should use synthetic data, local test accounts, and intentionally fictional infrastructure rather than real employer or customer information.
+This is a defensive lab. It uses synthetic data and local test identities and does not contain employer/customer information or offensive exploitation instructions.
 
----
+## Skills developed
 
-# The story: Aster Labs has a trust problem
+- threat modeling and trust boundaries
+- Linux host hardening and least privilege
+- management-plane/network segmentation
+- secrets handling and credential hygiene
+- container/workload isolation
+- logging/auditing concepts
+- PPML context and its boundary with system security
+- defense-in-depth and residual-risk communication
 
-Aster Labs begins with a dangerously simple design:
+## Obsidian campaign
 
-```text
-Researcher
-   ↓
-SSH
-   ↓
-Linux host
-   ↓
-GPU container
-   ↓
-Sensitive dataset + model
-```
+The files in [`missions/`](missions/) are authoritative. Missions 00–04 plus the Final are the core Weeks 43–44 campaign; Missions 05–06 are valuable extensions when time permits.
 
-Someone asks a few uncomfortable questions:
+| Mission | Security problem | Primary outcome |
+|---|---|---|
+| [00 — Trust Map](missions/00-trust-map.md) | Identify assets, actors, trust boundaries, and threats | first threat model |
+| [01 — Host Hardening](missions/01-host-hardening.md) | Reduce unnecessary privilege and weak host access | defensible host-access model |
+| [02 — Segmentation](missions/02-segmentation.md) | Separate workload, data, and management paths | trust-boundary/network diagram + tests |
+| [03 — Secrets](missions/03-secrets.md) | Remove plaintext/shared-secret anti-patterns | repeatable secret-handling process |
+| [04 — Container Isolation](missions/04-container-isolation.md) | Constrain workload privileges, mounts, and reachability | isolation evidence |
+| [05 — Audit](missions/05-audit.md) | Improve accountability and incident evidence | audit/logging timeline **(stretch)** |
+| [06 — PPML Boundary](missions/06-ppml.md) | Distinguish mathematical privacy protections from infrastructure controls | PPML/security boundary analysis **(stretch)** |
+| [Final — Obsidian Review](missions/final-obsidian-review.md) | Defend the architecture against adversarial design questions | threat/control/residual-risk review |
 
-- Can every researcher become root?
-- Where are credentials stored?
-- Can a workload reach the management plane?
-- Can one container see another workload's files?
-- What gets logged?
-- What happens when an employee leaves?
-- Can secrets accidentally land in Git?
-- Does encrypting a dataset matter if the host itself is compromised?
-- Where does privacy-preserving ML fit into this picture?
+## Security-boundary rule
 
-Nobody has a complete answer.
+“Private” does not automatically mean “secure.” Each control should state:
 
-That becomes your mission.
+1. threat or failure it addresses
+2. layer where it acts
+3. prevention/detection/containment/recovery value
+4. evidence that the control behaves as expected
+5. residual risk after the control exists
 
----
+PPML techniques may reduce specific privacy risks in data/model processing, but they do not replace host hardening, segmentation, identity, secrets management, patching, or auditing.
 
-## Foundry campaign
+## Evidence standard
 
-| Phase | Security problem | Core skills | Deliverable |
-|---|---|---|---|
-| 00 | **Name the Crown Jewels** | assets, trust boundaries, threats | first threat model |
-| 01 | **Lock the Workshop** | users, groups, sudo, SSH | hardened host access model |
-| 02 | **Separate the Hallways** | segmentation, firewalling, management plane | network trust-boundary diagram |
-| 03 | **The Secret Nobody Should Know** | secrets handling | remove plaintext/shared-secret anti-patterns |
-| 04 | **Contain the Experiment** | containers, mounts, privileges | constrained workload model |
-| 05 | **Who Touched the Model?** | logging, auditing, accountability | useful audit trail |
-| 06 | **Patch Without Panic** | updates, change control, rollback | maintenance procedure |
-| 07 | **The Insider Question** | least privilege, role separation | access-control review |
-| 08 | **The Stolen Laptop Scenario** | data-at-rest and credential risk | mitigation analysis |
-| 09 | **Privacy Is Not a Firewall** | PPML, DP, confidential-computing concepts | control-boundary comparison |
-| 10 | **Red-Team the Assumptions** | defensive validation | find and close design weaknesses |
-| FINAL | **Obsidian Review Board** | architecture defense | defend the design against a fictional security review |
+Useful artifacts include a threat model, trust diagram, segmentation tests, least-privilege evidence, sanitized configuration, secret-handling procedure, audit timeline, control matrix, PPML boundary analysis, and prioritized residual risks.
 
----
+Every artifact must clearly distinguish implemented/tested controls from modeled recommendations.
 
-## Defense-in-depth map
+## Completion condition
 
-```mermaid
-flowchart TB
-    P[Physical / device trust]
-    M[Management plane]
-    H[Linux host]
-    I[Identity + access]
-    N[Network segmentation]
-    C[Container / workload isolation]
-    S[Secrets]
-    D[Dataset + model]
-    O[Audit + monitoring]
-
-    P --> M --> H
-    H --> I
-    H --> N
-    H --> C
-    I --> C
-    S --> C
-    C --> D
-    I --> O
-    N --> O
-    C --> O
-```
-
-The diagram should evolve as you discover new trust boundaries.
-
----
-
-## The Foundry rule
-
-Every control must be tied to a threat.
-
-Bad reasoning:
-
-> “We enabled feature X because it is secure.”
-
-Better reasoning:
-
-```text
-Asset: model checkpoint
-Threat: unauthorized user copies it
-Path: shared host filesystem
-Control: restrictive ownership + role separation + audited access
-Residual risk: privileged host administrator can still access the file
-```
-
-The lab should repeatedly distinguish **control**, **assumption**, and **residual risk**.
-
----
-
-## Security drills
-
-Defensive scenarios can include:
-
-### The Forgotten Account
-A former researcher's account still has access. Determine which controls should have prevented or detected that.
-
-### The Secret in Git
-A synthetic API token is intentionally committed to a private test repository. Practice identifying the exposure path, revoking the fake credential, removing the bad workflow, and preventing recurrence.
-
-### The Overprivileged Container
-A workload has far more host access than it needs. Reduce privileges while preserving its function.
-
-### The Flat Network
-Management, workload, and user traffic all share the same trust zone. Redesign the boundaries.
-
-### The Invisible Administrator
-A privileged action occurs with no useful audit trail. Improve accountability.
-
-The purpose is not offensive exploitation. It is to validate that the defensive architecture actually matches the threat model.
-
----
-
-## Privacy-preserving ML chapter
-
-This project has a special role for PPML because privacy technologies are often misunderstood as general-purpose infrastructure security.
-
-Create a comparison such as:
-
-| Problem | Infrastructure control? | PPML/privacy technique? | Both? |
-|---|---|---|---|
-| Stolen SSH credential | | | |
-| Model memorization / leakage | | | |
-| Untrusted host administrator | | | |
-| Exposed plaintext secret | | | |
-| Training-data inference risk | | | |
-| Network eavesdropping | | | |
-
-The goal is to understand where techniques such as differential privacy, secure computation, encryption, or confidential-computing concepts fit—and where they do not replace ordinary systems security.
-
----
-
-## Evidence to keep
-
-Good artifacts include:
-
-- threat models
-- data-flow diagrams
-- trust-boundary diagrams
-- synthetic user/role matrices
-- hardened configuration examples
-- firewall/segmentation rules for the lab
-- container security comparisons
-- audit/logging examples
-- security review findings
-- remediation notes
-- a final architecture decision record
-
-Never include real credentials, employer configurations, customer data, internal hostnames, or private network details.
-
----
-
-## Suggested repository structure
-
-```text
-Private-AI-Foundry/
-├── README.md
-├── threat-model/
-├── architecture/
-├── hardening/
-├── network/
-├── identity/
-├── containers/
-├── secrets/
-├── audits/
-├── drills/
-└── evidence/
-```
-
----
-
-## Completion standard
-
-Private-AI-Foundry is complete when you can be given a proposed private AI deployment and systematically ask:
-
-- what the assets are,
-- where trust boundaries exist,
-- who can access what,
-- how data and credentials move,
-- which controls address which threats,
-- how activity is audited,
-- and what risks remain.
-
-The final deliverable is not a claim that the environment is **secure**.
-
-It is a defensible statement of:
-
-> **what it protects, how it protects it, and where its limits are.**
+Project Obsidian is complete when the architecture can survive a hostile design review because its assumptions are explicit, its core controls are testable, and its remaining risks are visible—not because it is merely described as private.
