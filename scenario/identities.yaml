@@ -1,0 +1,40 @@
+# Synthetic identities for Project Obsidian.
+identities:
+  - id: researcher-alex
+    kind: human
+    role: researcher
+    business_need: Submit training jobs and read approved research data.
+
+  - id: platform-admin-riley
+    kind: human
+    role: infrastructure_admin
+    business_need: Maintain hosts, orchestration, networking, and observability.
+
+  - id: security-auditor-sam
+    kind: human
+    role: auditor
+    business_need: Read audit evidence without routine workload-administration access.
+
+  - id: training-service
+    kind: service_account
+    role: training_workload
+    business_need: Read approved training data and write checkpoints.
+
+  - id: inference-service
+    kind: service_account
+    role: inference_workload
+    business_need: Read an approved model and serve synthetic requests.
+
+  - id: ci-service
+    kind: service_account
+    role: automation
+    business_need: Build/test approved synthetic artifacts.
+
+questions_to_answer_during_lab:
+  - Which identities need interactive login?
+  - Which privileges should be temporary or scoped?
+  - Which identities should never access raw training data?
+  - Which actions require auditability or separation of duties?
+
+# The starter file states business needs only. Least-privilege permissions and
+# trust decisions are intentionally left for the lab.
