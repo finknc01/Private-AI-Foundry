@@ -1,0 +1,50 @@
+# Intended functional flows only. Security zones/controls are intentionally not
+# specified; defining and testing those boundaries is part of the lab.
+data_flows:
+  - id: dataset-to-training
+    source: research-dataset
+    destination: training-gpu-node
+    actor: training-service
+    purpose: Read approved synthetic training records.
+
+  - id: training-to-checkpoint
+    source: training-gpu-node
+    destination: model-checkpoints
+    actor: training-service
+    purpose: Write intermediate/final model artifacts.
+
+  - id: registry-to-compute
+    source: artifact-registry
+    destination: training-gpu-node
+    actor: training-service
+    purpose: Pull approved workload image/artifact.
+
+  - id: checkpoint-to-inference
+    source: model-checkpoints
+    destination: inference-service
+    actor: inference-service
+    purpose: Load approved model for serving.
+
+  - id: user-to-inference
+    source: synthetic-client
+    destination: inference-service
+    actor: researcher-alex
+    purpose: Submit synthetic private inference request.
+
+  - id: systems-to-audit
+    source: training-gpu-node
+    destination: audit-logs
+    actor: platform-admin-riley
+    purpose: Preserve administrative/workload evidence.
+
+  - id: auditor-to-logs
+    source: security-auditor-sam
+    destination: audit-logs
+    actor: security-auditor-sam
+    purpose: Review audit evidence.
+
+questions_to_answer_during_lab:
+  - Which flows cross trust boundaries?
+  - Which flows need authentication, authorization, encryption, or stronger isolation?
+  - Which flows should be impossible even if technically reachable?
+  - What evidence would prove each intended control works?
