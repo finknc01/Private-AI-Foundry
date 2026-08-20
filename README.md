@@ -2,6 +2,17 @@
 
 > **Project Obsidian — build a private AI environment for sensitive workloads, then try to break your own trust assumptions before someone else does.**
 
+## Project status
+
+| Field | Current state |
+|---|---|
+| **Status** | **Planned — security/private-AI campaign scheduled for Weeks 43–44** |
+| **Current stage** | Campaign authored; no hardening result, threat-model finding, or security claim is presented as complete |
+| **Lab environment** | Synthetic users, data, credentials, and fictional infrastructure only |
+| **Evidence rule** | Defensive controls must map to explicit threats and residual risk; PPML is not represented as a substitute for host/network security |
+| **Last plan sync** | 2026-08-19 |
+| **License** | No open-source license is granted unless an explicit license is added later |
+
 ## Skills you will build
 
 - Threat modeling for AI infrastructure
