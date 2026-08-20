@@ -1,0 +1,46 @@
+# Synthetic assets for Project Obsidian. No real secrets or private data.
+assets:
+  - id: research-dataset
+    type: dataset
+    sensitivity: confidential
+    description: Synthetic training records used by research workloads.
+
+  - id: model-checkpoints
+    type: model_artifacts
+    sensitivity: confidential
+    description: Training checkpoints and final model artifacts.
+
+  - id: source-repository
+    type: source_code
+    sensitivity: internal
+    description: Synthetic application and infrastructure code.
+
+  - id: artifact-registry
+    type: container_and_model_registry
+    sensitivity: internal
+    description: Stores approved synthetic images/artifacts.
+
+  - id: training-gpu-node
+    type: compute
+    sensitivity: restricted
+    description: Disposable GPU-capable training environment.
+
+  - id: inference-service
+    type: service
+    sensitivity: confidential
+    description: Synthetic private inference endpoint.
+
+  - id: secrets-store
+    type: secrets
+    sensitivity: restricted
+    description: Holds lab-only credentials/tokens.
+
+  - id: audit-logs
+    type: logs
+    sensitivity: confidential
+    description: Authentication, administrative, and workload audit evidence.
+
+rules:
+  - All data and identities are fictional or synthetic.
+  - Do not add employer/customer systems, credentials, or production endpoints.
+  - Sensitivity labels are scenario inputs, not a completed threat model.
