@@ -2,15 +2,11 @@
 
 > **Project Obsidian — build a private AI environment for sensitive workloads, then challenge its trust assumptions before anyone else does.**
 
-## Project status
+## Lab environment
 
-| Field | Current state |
-|---|---|
-| **Status** | **Planned — core security campaign scheduled for Weeks 43–44** |
-| **Current stage** | Campaign authored; no hardening result, threat-model finding, or security claim is presented as complete |
-| **Lab environment** | Synthetic users, data, credentials, and fictional infrastructure only |
-| **Evidence rule** | Defensive controls must map to explicit threats and residual risk; PPML is not represented as a substitute for host/network security |
-| **Last plan sync** | 2026-08-19 |
+- **Core environment:** RHEL lab hosts using synthetic users, data, credentials, and fictional infrastructure only.
+- **Host-security focus:** SELinux, least privilege, SSH/sudo policy, firewalld/network segmentation, logging/auditing, and container boundaries.
+- **Evidence rule:** Defensive controls must map to explicit threats and residual risk; PPML is not represented as a substitute for host/network security.
 
 ## Purpose
 
@@ -25,7 +21,8 @@ This is a defensive lab. It uses synthetic data and local test identities and do
 ## Skills developed
 
 - threat modeling and trust boundaries
-- Linux host hardening and least privilege
+- RHEL host hardening and least privilege
+- SELinux and host policy reasoning
 - management-plane/network segmentation
 - secrets handling and credential hygiene
 - container/workload isolation
@@ -35,7 +32,7 @@ This is a defensive lab. It uses synthetic data and local test identities and do
 
 ## Obsidian campaign
 
-The files in [`missions/`](missions/) are authoritative. Missions 00–04 plus the Final are the core Weeks 43–44 campaign; Missions 05–06 are valuable extensions when time permits.
+The files in [`missions/`](missions/) are authoritative. Missions 00–04 plus the Final are the core campaign; Missions 05–06 are valuable extensions when time permits.
 
 | Mission | Security problem | Primary outcome |
 |---|---|---|
@@ -62,7 +59,7 @@ PPML techniques may reduce specific privacy risks in data/model processing, but 
 
 ## Evidence standard
 
-Useful artifacts include a threat model, trust diagram, segmentation tests, least-privilege evidence, sanitized configuration, secret-handling procedure, audit timeline, control matrix, PPML boundary analysis, and prioritized residual risks.
+Useful artifacts include a threat model, trust diagram, segmentation tests, least-privilege evidence, sanitized RHEL configuration, SELinux evidence, secret-handling procedure, audit timeline, control matrix, PPML boundary analysis, and prioritized residual risks.
 
 Every artifact must clearly distinguish implemented/tested controls from modeled recommendations.
 
